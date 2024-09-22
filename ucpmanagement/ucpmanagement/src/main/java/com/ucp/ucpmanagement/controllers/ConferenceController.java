@@ -50,4 +50,60 @@ public class ConferenceController {
         conferenceService.deleteConference(id);
         return ResponseEntity.noContent().build();
     }
+
+    // Add a PC Chair to the conference
+    @PostMapping("/{id}/pc-chair")
+    public ResponseEntity<Conference> addPCChair(@PathVariable Long id, @RequestParam Long userId) {
+        Conference updatedConference = conferenceService.addPCChair(id, userId);
+        return ResponseEntity.ok(updatedConference);
+    }
+
+    // Add a PC Member to the conference
+    @PostMapping("/{id}/pc-member")
+    public ResponseEntity<Conference> addPCMember(@PathVariable Long id, @RequestParam Long userId) {
+        Conference updatedConference = conferenceService.addPCMember(id, userId);
+        return ResponseEntity.ok(updatedConference);
+    }
+
+    // Start Submission Phase
+    @PostMapping("/{id}/start-submission")
+    public ResponseEntity<Conference> startSubmission(@PathVariable Long id) {
+        Conference updatedConference = conferenceService.startSubmission(id);
+        return ResponseEntity.ok(updatedConference);
+    }
+
+    // Start Reviewer Assignment Phase
+    @PostMapping("/{id}/start-assignment")
+    public ResponseEntity<Conference> startReviewerAssignment(@PathVariable Long id) {
+        Conference updatedConference = conferenceService.startReviewerAssignment(id);
+        return ResponseEntity.ok(updatedConference);
+    }
+
+    // Start Review Phase
+    @PostMapping("/{id}/start-review")
+    public ResponseEntity<Conference> startReview(@PathVariable Long id) {
+        Conference updatedConference = conferenceService.startReview(id);
+        return ResponseEntity.ok(updatedConference);
+    }
+
+    // Start Decision Making Phase
+    @PostMapping("/{id}/start-decision")
+    public ResponseEntity<Conference> startDecision(@PathVariable Long id) {
+        Conference updatedConference = conferenceService.startDecision(id);
+        return ResponseEntity.ok(updatedConference);
+    }
+
+    // Start Final Submission Phase
+    @PostMapping("/{id}/start-final-submission")
+    public ResponseEntity<Conference> startFinalSubmission(@PathVariable Long id) {
+        Conference updatedConference = conferenceService.startFinalSubmission(id);
+        return ResponseEntity.ok(updatedConference);
+    }
+
+    // End the Conference
+    @PostMapping("/{id}/end-conference")
+    public ResponseEntity<Conference> endConference(@PathVariable Long id) {
+        Conference updatedConference = conferenceService.endConference(id);
+        return ResponseEntity.ok(updatedConference);
+    }
 }

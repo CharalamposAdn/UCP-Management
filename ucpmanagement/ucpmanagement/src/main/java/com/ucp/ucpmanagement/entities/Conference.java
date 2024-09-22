@@ -46,6 +46,4 @@ public class Conference {
     // Relationship with Papers
     @OneToMany(mappedBy = "conference")
     private Set<Paper> papers = new HashSet<>();
-
-
 }
