@@ -19,7 +19,7 @@ public class ConferenceController {
 
     // Create a new conference
     // Only PC Chair or Admin can create a new conference
-    @PreAuthorize("hasRole('PC_CHAIR') or hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PC_CHAIR')")
     @PostMapping
     public ResponseEntity<Conference> createConference(@RequestBody Conference conference) {
         Conference createdConference = conferenceService.createConference(conference);
@@ -35,7 +35,8 @@ public class ConferenceController {
         return ResponseEntity.ok(conference);
     }
 
-    // Search for conferences by name
+    // Search for conferences by name (available to all roles)
+    @PreAuthorize("hasAnyRole('PC_CHAIR', 'PC_MEMBER', 'ADMIN', 'USER')")
     @GetMapping("/search")
     public ResponseEntity<List<Conference>> searchConferencesByName(@RequestParam String name) {
         List<Conference> conferences = conferenceService.searchConferencesByName(name);
@@ -43,7 +44,7 @@ public class ConferenceController {
     }
 
     // Update a conference
-    // Only PC Chair or Admin can create a new conference
+    // Only PC Chair or Admin can update a conference
     @PreAuthorize("hasRole('PC_CHAIR') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Conference> updateConference(@PathVariable Long id, @RequestBody Conference conferenceDetails) {
@@ -61,6 +62,8 @@ public class ConferenceController {
     }
 
     // Add a PC Chair to the conference
+    // Only Admins can assign PC Chairs
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/{id}/pc-chair")
     public ResponseEntity<Conference> addPCChair(@PathVariable Long id, @RequestParam Long userId) {
         Conference updatedConference = conferenceService.addPCChair(id, userId);
@@ -68,6 +71,8 @@ public class ConferenceController {
     }
 
     // Add a PC Member to the conference
+    // Only Admins or PC Chairs can assign PC Members
+    @PreAuthorize("hasRole('ADMIN') or hasRole('PC_CHAIR')")
     @PostMapping("/{id}/pc-member")
     public ResponseEntity<Conference> addPCMember(@PathVariable Long id, @RequestParam Long userId) {
         Conference updatedConference = conferenceService.addPCMember(id, userId);
@@ -75,6 +80,8 @@ public class ConferenceController {
     }
 
     // Start Submission Phase
+    // Only PC Chair can start the submission phase
+    @PreAuthorize("hasRole('PC_CHAIR')")
     @PostMapping("/{id}/start-submission")
     public ResponseEntity<Conference> startSubmission(@PathVariable Long id) {
         Conference updatedConference = conferenceService.startSubmission(id);
@@ -82,6 +89,8 @@ public class ConferenceController {
     }
 
     // Start Reviewer Assignment Phase
+    // Only PC Chair can start the reviewer assignment phase
+    @PreAuthorize("hasRole('PC_CHAIR')")
     @PostMapping("/{id}/start-assignment")
     public ResponseEntity<Conference> startReviewerAssignment(@PathVariable Long id) {
         Conference updatedConference = conferenceService.startReviewerAssignment(id);
@@ -89,6 +98,8 @@ public class ConferenceController {
     }
 
     // Start Review Phase
+    // Only PC Chair can start the review phase
+    @PreAuthorize("hasRole('PC_CHAIR')")
     @PostMapping("/{id}/start-review")
     public ResponseEntity<Conference> startReview(@PathVariable Long id) {
         Conference updatedConference = conferenceService.startReview(id);
@@ -96,6 +107,8 @@ public class ConferenceController {
     }
 
     // Start Decision Making Phase
+    // Only PC Chair can start the decision-making phase
+    @PreAuthorize("hasRole('PC_CHAIR')")
     @PostMapping("/{id}/start-decision")
     public ResponseEntity<Conference> startDecision(@PathVariable Long id) {
         Conference updatedConference = conferenceService.startDecision(id);
@@ -103,6 +116,8 @@ public class ConferenceController {
     }
 
     // Start Final Submission Phase
+    // Only PC Chair can start the final submission phase
+    @PreAuthorize("hasRole('PC_CHAIR')")
     @PostMapping("/{id}/start-final-submission")
     public ResponseEntity<Conference> startFinalSubmission(@PathVariable Long id) {
         Conference updatedConference = conferenceService.startFinalSubmission(id);
@@ -110,6 +125,8 @@ public class ConferenceController {
     }
 
     // End the Conference
+    // Only PC Chair or Admin can end the conference
+    @PreAuthorize("hasRole('PC_CHAIR') or hasRole('ADMIN')")
     @PostMapping("/{id}/end-conference")
     public ResponseEntity<Conference> endConference(@PathVariable Long id) {
         Conference updatedConference = conferenceService.endConference(id);

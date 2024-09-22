@@ -1,3 +1,4 @@
+
 package com.ucp.ucpmanagement.security;
 
 
@@ -13,7 +14,7 @@ import java.util.Date;
 @Component
 public class JwtTokenProvider {
 
-    private final SecretKey jwtSecret = Keys.hmacShaKeyFor("secretKeysecretKeysecretKeysecretKey".getBytes()); // Use a secure key
+    private final SecretKey jwtSecret = Keys.hmacShaKeyFor("524865259524865259524865259524865259".getBytes()); // Use a secure key
     private final int jwtExpirationInMs = 3600000; // 1 hour
 
     // Generate JWT Token
@@ -54,4 +55,6 @@ public class JwtTokenProvider {
             return false;
         }
     }
+    
+
 }

@@ -2,6 +2,7 @@ package com.ucp.ucpmanagement.services;
 
 import com.ucp.ucpmanagement.entities.Conference;
 import com.ucp.ucpmanagement.entities.ConferenceState;
+import com.ucp.ucpmanagement.entities.User;
 import com.ucp.ucpmanagement.repositories.ConferenceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +46,7 @@ public class ConferenceService {
         conferenceRepository.deleteById(id);
     }
 
-    // Add PC Chair
+    //add PC Chair
     public Conference addPCChair(Long id, Long userId) {
         Optional<Conference> optionalConference = conferenceRepository.findById(id);
         if (optionalConference.isPresent()) {
@@ -59,7 +60,7 @@ public class ConferenceService {
         }
     }
 
-    // Add PC Member
+    //add PC Member
     public Conference addPCMember(Long id, Long userId) {
         Optional<Conference> optionalConference = conferenceRepository.findById(id);
         if (optionalConference.isPresent()) {
@@ -73,37 +74,37 @@ public class ConferenceService {
         }
     }
 
-    // Start Submission Phase
+    //start Submission Phase
     public Conference startSubmission(Long id) {
         return updateConferenceState(id, ConferenceState.SUBMISSION);
     }
 
-    // Start Reviewer Assignment Phase
+    //start Reviewer Assignment Phase
     public Conference startReviewerAssignment(Long id) {
         return updateConferenceState(id, ConferenceState.ASSIGNMENT);
     }
 
-    // Start Review Phase
+    //start Review Phase
     public Conference startReview(Long id) {
         return updateConferenceState(id, ConferenceState.REVIEW);
     }
 
-    // Start Decision Phase
+    //start Decision Phase
     public Conference startDecision(Long id) {
         return updateConferenceState(id, ConferenceState.DECISION);
     }
 
-    // Start Final Submission Phase
+    //start Final Submission Phase
     public Conference startFinalSubmission(Long id) {
         return updateConferenceState(id, ConferenceState.FINAL_SUBMISSION);
     }
 
-    // End Conference
+    //end Conference
     public Conference endConference(Long id) {
         return updateConferenceState(id, ConferenceState.FINAL);
     }
 
-    // Helper to update conference state
+    //helper to update conference state
     private Conference updateConferenceState(Long id, ConferenceState newState) {
         Optional<Conference> optionalConference = conferenceRepository.findById(id);
         if (optionalConference.isPresent()) {
@@ -115,9 +116,9 @@ public class ConferenceService {
         }
     }
 
-    // Dummy method to fetch a User by ID (you would implement this based on your system)
+    //dummy method to fetch a User by ID (you would implement this based on your system)
     private User fetchUserById(Long userId) {
-        // TODO: Implement logic to retrieve user from user service or repository
-        return new User(); // Placeholder
+    
+        return new User(); 
     }
 }

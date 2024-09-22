@@ -39,5 +39,35 @@ public class User {
     @ManyToMany(mappedBy = "reviewers")
     private Set<Paper> papersToReview = new HashSet<>();
 
+     // Check if the user has a specific role (e.g., PC_MEMBER, PC_CHAIR) for a given conference
+     public boolean hasRoleForConference(String role, Conference conference) {
+        switch (role) {
+            case "PC_CHAIR":
+                return conferencesAsPcChair.contains(conference);
+            case "PC_MEMBER":
+                return conferencesAsPcMember.contains(conference);
+            case "AUTHOR":
+                return authoredPapers.stream().anyMatch(paper -> paper.getConference().equals(conference));
+            default:
+                return false;
+        }
+    }
+
+    // Add a role for a specific conference
+    public void addRoleForConference(String role, Conference conference) {
+        switch (role) {
+            case "PC_CHAIR":
+                conferencesAsPcChair.add(conference);
+                break;
+            case "PC_MEMBER":
+                conferencesAsPcMember.add(conference);
+                break;
+            case "AUTHOR":
+                authoredPapers.add(new Paper(this, conference));
+                break;
+        }
+    }
+
+
 
 }

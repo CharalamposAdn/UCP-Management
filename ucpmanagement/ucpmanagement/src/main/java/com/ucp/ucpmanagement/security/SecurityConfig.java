@@ -31,12 +31,13 @@ public class SecurityConfig {
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)) // Stateless session, JWT only
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/login").permitAll() // Allow login without authentication
+                .requestMatchers("/api/users/register").permitAll() // Allow registration without authentication
                 .requestMatchers("/api/users/**").hasRole("ADMIN") // Only Admin can manage users
                 .requestMatchers("/api/conferences/**").hasAnyRole("PC_CHAIR", "ADMIN") // PC Chairs and Admin can manage conferences
                 .requestMatchers("/api/papers/**").hasAnyRole("AUTHOR", "PC_MEMBER", "PC_CHAIR") // Paper actions for Authors, PC Members, and PC Chairs
                 .anyRequest().authenticated() // All other requests need authentication
             )
-            .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class); // Add JWT filter before UsernamePasswordAuthenticationFilter
+            .addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class); 
 
         return http.build();
     }

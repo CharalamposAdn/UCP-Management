@@ -3,6 +3,7 @@ package com.ucp.ucpmanagement.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,6 +11,10 @@ import java.util.Set;
 @Data
 @Entity
 public class Paper {
+
+    public Paper(User user, Conference conference2) {
+        //TODO Auto-generated constructor stub
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -21,7 +26,7 @@ public class Paper {
     @Column(nullable = false)
     private String abstractText;
 
-    private String content;  // PDF, TeX, or other file types
+    private String content;  
 
     @Enumerated(EnumType.STRING)
     private PaperState state;
