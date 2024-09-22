@@ -4,6 +4,7 @@ import com.ucp.ucpmanagement.entities.Conference;
 import com.ucp.ucpmanagement.services.ConferenceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class ConferenceController {
     private ConferenceService conferenceService;
 
     // Create a new conference
+    // Only PC Chair or Admin can create a new conference
+    @PreAuthorize("hasRole('PC_CHAIR') or hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<Conference> createConference(@RequestBody Conference conference) {
         Conference createdConference = conferenceService.createConference(conference);
@@ -24,6 +27,8 @@ public class ConferenceController {
     }
 
     // Get a conference by ID
+    // Anyone with PC Chair, PC Member, or Admin role can view conferences
+    @PreAuthorize("hasAnyRole('PC_CHAIR', 'PC_MEMBER', 'ADMIN')")
     @GetMapping("/{id}")
     public ResponseEntity<Optional<Conference>> getConferenceById(@PathVariable Long id) {
         Optional<Conference> conference = conferenceService.getConferenceById(id);
@@ -38,6 +43,8 @@ public class ConferenceController {
     }
 
     // Update a conference
+    // Only PC Chair or Admin can create a new conference
+    @PreAuthorize("hasRole('PC_CHAIR') or hasRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<Conference> updateConference(@PathVariable Long id, @RequestBody Conference conferenceDetails) {
         Conference updatedConference = conferenceService.updateConference(id, conferenceDetails);
@@ -45,6 +52,8 @@ public class ConferenceController {
     }
 
     // Delete a conference
+    // Only PC Chair or Admin can delete a conference
+    @PreAuthorize("hasRole('PC_CHAIR') or hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteConference(@PathVariable Long id) {
         conferenceService.deleteConference(id);
